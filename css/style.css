@@ -1,0 +1,75 @@
+* {
+    padding:0;
+    margin:0;
+    vertical-align:baseline;
+    overflow-x: hidden;
+    list-style:none;
+    border:0;
+}
+
+.box {
+    display: block;
+    align-content: center;
+    height: 100vh;
+}
+
+.box-in {
+    border: black 3px solid;
+    border-radius: 10px;
+    display: inline-block;
+    grid-area: a;
+    align-self: center;
+    justify-self: center;
+    padding: 2rem;
+}
+
+.box-in input {
+    border: darkgray 2px solid;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.titulo {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    max-width: 200px;
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 3px black solid;
+}
+
+.box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    grid-auto-rows: 200px;
+    grid-template-areas:
+      ". a a ."
+      ". a a .";
+}
+
+.botao {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+}
+
+button {
+    font-size: 15px;
+    font-weight: 900;
+    border: black 3px solid;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #0275d8;
+}
+
+button:hover {
+    font-size: 15px;
+    font-weight: 900;
+    border: black 3px solid;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #0088ff;
+    cursor: pointer;
+}

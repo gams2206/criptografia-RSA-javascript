@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    
+    <head>
+        <title> criptografia RSA javascript </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Demonstração de criptografia RSA com javascript">
+        <meta name="author" content="GamsWebDesigner">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="./jsencrypt.min.js"></script>
+    </head>
+    
+    <body>
+
+        <script type="text/javascript">
+            // chamada decódigo após a pagina estar carregada
+            $(function () {
+
+                // Encriptar (Click Action!)
+                $('#enviar').click(function () {
+                    event.preventDefault();
+
+                    // Encrypt with the public key...
+                    var encrypt = new JSEncrypt(); // Função interna do JSEncrypt
+                    encrypt.setPublicKey($('#pubkey').val());
+
+                    //Atribuindo valores dos campos de texto para as respectivas váriaveis
+                    let email = $('#email').val();
+                    let senha = $('#pass').val();
+
+                    //criptografando os dados
+                    var cryptEmail = encrypt.encrypt(email);
+                    var cryptSenha = encrypt.encrypt(senha);
+
+                    // Salvando dados no Local Storage
+                    localStorage.setItem("email", cryptEmail);
+                    localStorage.setItem("senha", cryptSenha);
+                    
+                    // exibindo dados criptografados
+                    alert("Email: " + cryptEmail + "\n\n" + "Senha: " + cryptSenha);
+                });
+
+            });
+
+            $(function () {
+
+                // Desencriptação (Click Action!)
+                $('#decript').click(function () {
+                    event.preventDefault();
+                    
+                    let cryptEmail1 = localStorage.getItem("email"); // Pushando Email da Local Storage
+                    let cryptSenha1 = localStorage.getItem("senha"); // Pushando Senha da Local Storage
+                    
+                    //decodificação com a chave privada
+                    let decrypt = new JSEncrypt(); // função interna do JSEncrypt
+                    decrypt.setPrivateKey($('#privkey').val()); // Setando a chave privada
+                    let decryptEmail1 = decrypt.decrypt(cryptEmail1); 
+                    let decryptSenha1 = decrypt.decrypt(cryptSenha1);
+
+                    alert("Email: " + decryptEmail1 + "\n\n" + "Senha: " + decryptSenha1);
+                });
+            });
+        </script>
+
+    <!-- Essa chave publica deve ser criada apartir da chave privada rsa -->
+    <textarea id="pubkey" hidden="true">
+        -----BEGIN PUBLIC KEY-----
+        MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIXMCQVJNZTmhzw2G7PUg+jW9flhtmxg
+        vZuA+55i3SdmubiZaWKPIAUrvzILinudhFt6GD6/xVbE4Cu5XG+0SUMCAwEAAQ==
+        -----END PUBLIC KEY-----
+    </textarea>
+
+    <textarea id="privkey" rows="15" cols="65" hidden="true">
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIBOwIBAAJBAIXMCQVJNZTmhzw2G7PUg+jW9flhtmxgvZuA+55i3SdmubiZaWKP
+        IAUrvzILinudhFt6GD6/xVbE4Cu5XG+0SUMCAwEAAQJAfELMte4SJ2Iagx81h0R9
+        5geOlrfbNrh6ICwghC8JegcSNi5KE1Ot84MyuLoQ6DHXHmXF0gc5nkW/iH91+RDN
+        sQIhAP7rxNRqL9ONxxlblGM7tFpQ4LQq49f5N0x+x5k+nqolAiEAhl0EXEz6+y1N
+        9bng4DoJQAvF6hBBH8WT2DTaA32A5UcCIQDtCjcAfazzPsaAIdQdYgsWYFZRsgAj
+        d62gB9N5/+xxsQIgOIabVgVgtRjbKlxXmZ1w1MvfKFhMPYSObS/W5A8BkfMCIQCM
+        zjPLS3/R0wo7A31dDL3+UGwzG522/bWGIKjW3VtZvA==
+        -----END RSA PRIVATE KEY-----
+    </textarea>
+        
+    <main class="box">
+        <form class="box-in" name="form">
+            <div class="titulo">E-mail e Senha para criptografar</div>
+            <div class="form">
+                <h3>E-mail</h3>
+                <input id="email" name="email" type="mail">
+            </div>
+            <div class="form">
+                <h3>Senha</h3>
+                <input id="pass" name="pass" type="password">
+            </div>
+            <div class="botao">
+                <button id="enviar">Criptografar</button>
+            </div>
+            <div class="botao">
+                <button id="decript">Descriptografar</button>
+            </div>
+        </form>
+    </main>
+    </body>
+
+</html>
